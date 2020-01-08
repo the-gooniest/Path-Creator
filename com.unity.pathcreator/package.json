@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+  },
+    "description": "Bezier path creator based on Sebastian Lague's open source implementation.", 
+    "displayName": "Path-Creator", 	
+    "name": "com.unity.pathcreator", 
+    "unity": "2019.3", 
+    "version": "0.0.1"
+}
