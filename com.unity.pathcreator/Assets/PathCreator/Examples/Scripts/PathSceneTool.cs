@@ -9,6 +9,8 @@ namespace PathCreation.Examples
         public PathCreator pathCreator;
         public bool autoUpdate = true;
 
+        private bool _updateCallbackIsSet = false;
+
         protected VertexPath path {
             get {
                 return pathCreator.path;
@@ -19,6 +21,14 @@ namespace PathCreation.Examples
             PathUpdated();
         }
 
+        protected virtual void OnValidate()
+        {
+            if (!_updateCallbackIsSet && pathCreator != null)
+            {
+                pathCreator.pathUpdated += PathUpdated;
+                _updateCallbackIsSet = true;
+            }
+        }
 
         protected virtual void OnDestroy() {
             if (onDestroyed != null) {

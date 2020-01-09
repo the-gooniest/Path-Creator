@@ -23,11 +23,14 @@ namespace PathCreation.Examples {
         Mesh mesh;
 
         protected override void PathUpdated () {
-            if (pathCreator != null) {
-                AssignMeshComponents ();
-                AssignMaterials ();
-                CreateRoadMesh ();
+            if (pathCreator == null)
+            {
+                return;
             }
+
+            AssignMeshComponents ();
+            AssignMaterials ();
+            CreateRoadMesh ();
         }
 
         void CreateRoadMesh () {
@@ -121,9 +124,10 @@ namespace PathCreation.Examples {
         void AssignMeshComponents () {
 
             if (meshHolder == null) {
-                meshHolder = new GameObject ("Road Mesh Holder");
+                meshHolder = new GameObject ("Road Mesh");
             }
 
+            meshHolder.transform.parent = transform;
             meshHolder.transform.rotation = Quaternion.identity;
             meshHolder.transform.position = Vector3.zero;
             meshHolder.transform.localScale = Vector3.one;
