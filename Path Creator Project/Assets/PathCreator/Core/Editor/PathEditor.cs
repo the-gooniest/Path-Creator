@@ -271,7 +271,7 @@ namespace PathCreationEditor {
 
         #region Scene GUI
 
-        void OnSceneGUI () {
+        public void OnSceneGUI () {
             if (!globalDisplaySettings.visibleBehindObjects) {
                 Handles.zTest = UnityEngine.Rendering.CompareFunction.LessEqual;
             }
@@ -381,9 +381,9 @@ namespace PathCreationEditor {
                         var endPointGlobal =
                             MathUtility.TransformPoint(endPointLocal, creator.transform, bezierPath.Space);
                         var distanceCameraToEndpoint = (Camera.current.transform.position - endPointGlobal).magnitude;
-                        var newPointGlobal = 
+                        var newPointGlobal =
                             MouseUtility.GetMouseWorldPosition (bezierPath.Space, distanceCameraToEndpoint);
-                        var newPointLocal = 
+                        var newPointLocal =
                             MathUtility.InverseTransformPoint (newPointGlobal, creator.transform, bezierPath.Space);
 
                         Undo.RecordObject (creator, "Add segment");
@@ -527,7 +527,7 @@ namespace PathCreationEditor {
             handlePosition = PathHandle.DrawHandle (handlePosition, bezierPath.Space, isInteractive, handleSize, cap, handleColours, out handleInputType, i);
 
             if (doTransformHandle) {
-                // Show normals rotate tool 
+                // Show normals rotate tool
                 if (data.showNormals && Tools.current == Tool.Rotate && isAnchorPoint && bezierPath.Space == PathSpace.xyz) {
                     Handles.color = handlesStartCol;
 
