@@ -3,64 +3,48 @@ using UnityEngine;
 
 namespace PathCreation.Utility {
     public static class MathUtility {
-
-        static PosRotScale LockTransformToSpace (Transform t, PathSpace space) {
-            var original = new PosRotScale (t);
-            if (space == PathSpace.xy) {
-                t.eulerAngles = new Vector3 (0, 0, t.eulerAngles.z);
-                t.position = new Vector3 (t.position.x, t.position.y, 0);
-            } else if (space == PathSpace.xz) {
-                t.eulerAngles = new Vector3 (0, t.eulerAngles.y, 0);
-                t.position = new Vector3 (t.position.x, 0, t.position.z);
+        static Vector3 LockPointToSpace(Vector3 p, PathSpace space)
+        {
+            if (space == PathSpace.xy)
+            {
+                return new Vector3(p.x, p.y, 0);
+            }
+            if(space == PathSpace.xz)
+            {
+                return new Vector3(p.x, 0, p.z);
             }
 
-            //float maxScale = Mathf.Max (t.localScale.x * t.parent.localScale.x, t.localScale.y * t.parent.localScale.y, t.localScale.z * t.parent.localScale.z);
-            float maxScale = Mathf.Max (t.lossyScale.x, t.lossyScale.y, t.lossyScale.z);
-
-            t.localScale = Vector3.one * maxScale;
-
-            return original;
+            return p;
         }
 
         public static Vector3 TransformPoint (Vector3 p, Transform t, PathSpace space) {
-            var original = LockTransformToSpace (t, space);
-            Vector3 transformedPoint = t.TransformPoint (p);
-            original.SetTransform (t);
+            var lockedPoint = LockPointToSpace(p, space);
+            var transformedPoint = t.TransformPoint(lockedPoint);
             return transformedPoint;
         }
 
         public static Vector3 InverseTransformPoint (Vector3 p, Transform t, PathSpace space) {
-            var original = LockTransformToSpace (t, space);
-            Vector3 transformedPoint = t.InverseTransformPoint (p);
-            original.SetTransform (t);
+            var transformedPoint = t.InverseTransformPoint (p);
             return transformedPoint;
         }
 
         public static Vector3 TransformVector (Vector3 p, Transform t, PathSpace space) {
-            var original = LockTransformToSpace (t, space);
-            Vector3 transformedPoint = t.TransformVector (p);
-            original.SetTransform (t);
+            Vector3 transformedPoint = t.TransformVector(LockPointToSpace(p, space));
             return transformedPoint;
         }
 
         public static Vector3 InverseTransformVector (Vector3 p, Transform t, PathSpace space) {
-            var original = LockTransformToSpace (t, space);
             Vector3 transformedPoint = t.InverseTransformVector (p);
-            original.SetTransform (t);
             return transformedPoint;
         }
 
         public static Vector3 TransformDirection (Vector3 p, Transform t, PathSpace space) {
-            var original = LockTransformToSpace (t, space);
-            Vector3 transformedPoint = t.TransformDirection (p);
-            original.SetTransform (t);
+            Vector3 transformedPoint = t.TransformDirection (LockPointToSpace(p, space));
             return transformedPoint;
         }
 
         public static Vector3 InverseTransformDirection (Vector3 p, Transform t, PathSpace space) {
-            var original = LockTransformToSpace (t, space);
             Vector3 transformedPoint = t.InverseTransformDirection (p);
-            original.SetTransform (t);
             return transformedPoint;
         }
 
