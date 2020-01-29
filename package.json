@@ -1,0 +1,8 @@
+{
+	"description": "Tool for drawing splines", 
+	"displayName": "Path Creator", 
+	"name": "com.the-gooniest.path-creator", 
+	"unity": "2019.3", 
+	"version": "0.1.0",
+	"dependencies": {}
+}
